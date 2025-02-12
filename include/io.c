@@ -26,6 +26,7 @@ void printf_win(struct window* win, char color, const char *format, ...){
         if(buffer[inc] == '\n'){
             win->cursor_y++;
             win->cursor_x = 0;
+            buffer[inc] = ' ';
         }
         else if(win->cursor_x >= win->size_x){
             win->cursor_x = 1;
@@ -41,7 +42,7 @@ void printf_win(struct window* win, char color, const char *format, ...){
             memset(&new_char_buffer[total_size - win->size_x], ' ', win->size_x);
 
             memcpy(new_color_buffer, &win->color_buffer[win->size_x], total_size - win->size_x);
-            memset(&new_color_buffer[total_size - win->size_x], 0, win->size_x);
+            memset(&new_color_buffer[total_size - win->size_x], 0xf0, win->size_x);
 
             free(win->char_buffer);
             free(win->color_buffer);
@@ -50,7 +51,12 @@ void printf_win(struct window* win, char color, const char *format, ...){
 
             win->cursor_y--;
         }
-        draw_char_win(buffer[inc], win->cursor_x, win->cursor_y, color, win);
+        if(buffer[inc] != '\0'){
+            draw_char_win(buffer[inc], win->cursor_x, win->cursor_y, color, win);
+        }
+        else{
+            draw_char_win(' ', win->cursor_x, win->cursor_y, color, win);
+        }
         win->cursor_x++;
         inc++;
     }

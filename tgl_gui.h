@@ -15,12 +15,9 @@ struct window{
 
 struct window* windows;
 struct window* current_window;
-struct window* debug_window;
 int window_inc = 0;
 
-void render_window(struct window* win, int x, int y);
-
-struct window* new_window(char* name, int size_x, int size_y);
+struct window* create_window(char* name, int size_x, int size_y);
 
 void draw_char_win(char c, int x, int y, char color, struct window* win);
 
