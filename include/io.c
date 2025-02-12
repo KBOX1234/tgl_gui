@@ -51,3 +51,5 @@ void printf_win(struct window* win, char color, const char *format, ...) {
 
     free(buffer);
 }
+
+
