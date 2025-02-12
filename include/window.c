@@ -35,7 +35,7 @@ void render_window(struct window* win, int x, int y){
         pointer_x = x;
     }
 
-    draw_text(win->title, x + 3, y, 0xf0);
+    draw_text(win->title, x + 3, y, 0x20);
     
 
 }
@@ -68,6 +68,8 @@ struct window* create_window(char* name, int size_x, int size_y){
     windows = new_list;
 
     windows[window_inc] = *new_window(name, size_x, size_y);
+    windows[window_inc].x = 5;
+    windows[window_inc].y = 5;
 
     return &windows[window_inc];
 }

@@ -11,6 +11,9 @@ struct window{
 
     int cursor_x;
     int cursor_y;
+
+    int x;
+    int y;
 };
 
 struct window* windows;
