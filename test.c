@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define IMG_LOADING
+
 #include "terminal_gl.h"
 #include "impl/backend_linux.c"
 
@@ -13,9 +15,12 @@ int main(){
     struct window* test = create_window("status", 30, 10);
     struct window* test2 = create_window("inct log", 20, 10);
 
+    struct text_image guy = load_buffer("test.x");
+
     printf_win(test, 0xe0, "hello there\n");
-    printf_win(test, 0xf0, "number: %d\n", 9);
-    int xi = 3;
+    printf_win(test, 0x04, "number: %d\n", 9);
+    int xi = 30;
+    int yi = 9;
     unsigned long inct = 0;
 
     while (1){
@@ -24,13 +29,33 @@ int main(){
         printf_win(test2, 0xe0, "inct: %d\n", inct);
 
         render_window(test, 3, 3);
-        render_window(test2, xi, 30);
+
+        render_text_image(guy, xi, yi, 0);
+
+        render_window(test2, 3, 30);
 
         update();
         scan_input();
 
-        if(is_key_pressed('t') == 1) printf_win(test, 0x30, "key 't' pressed\n");
-        if(is_key_pressed('l') == 1) printf_win(test, 0x10, "key 'l' pressed\n");
+        if(is_key_pressed('w') == 0){
+            printf_win(test, 0xa0, "W key pressed\n");
+            yi++;
+        }
+
+        if(is_key_pressed('a') == 0){
+            printf_win(test, 0xa0, "A key pressed\n");
+            xi++;
+        }
+
+        if(is_key_pressed('s') == 0){
+            printf_win(test, 0xa0, "S key pressed\n");
+            yi--;
+        }
+
+        if(is_key_pressed('d') == 0){
+            printf_win(test, 0xa0, "D key pressed\n");
+            xi--;
+        }
         inct++;
     }
     
