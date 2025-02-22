@@ -37,6 +37,10 @@ int main(){
         update();
         scan_input();
 
+        if(is_key_pressed('l')){
+            clear_win(test2);
+        }
+
         if(is_key_pressed('w') == 0){
             printf_win(test, 0xa0, "W key pressed\n");
             yi++;

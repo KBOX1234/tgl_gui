@@ -74,3 +74,17 @@ struct window* create_window(char* name, int size_x, int size_y){
     return &windows[window_inc];
 }
 
+void clear_win(struct window* win){
+    int size_x = win->size_x;
+    int size_y = win->size_y;
+
+    win->cursor_x = 0;
+    win->cursor_y = 0;
+    memset(win->char_buffer, ' ', size_x*size_y);
+    memset(win->color_buffer, 0xf0, size_x*size_y);
+}
+
+void set_cursor_pos_win(struct window* win, int x, int y){
+    win->cursor_x = x;
+    win->cursor_y = y;
+}

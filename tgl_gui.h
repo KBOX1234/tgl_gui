@@ -28,6 +28,10 @@ void draw_char_win(char c, int x, int y, char color, struct window* win);
 
 void printf_win(struct window* win, char color, const char *format, ...);
 
+void set_cursor_pos_win(struct window* win, int x, int y);
+
+void clear_win(struct window* win);
+
 #include "include/window.c"
 #include "include/debug_tgl.c"
 #include "include/io.c"
