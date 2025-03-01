@@ -40,12 +40,15 @@ void render_window(struct window* win, int x, int y){
 
 }
 
-struct window* new_window(char* name, int size_x, int size_y){
+struct window* new_window(const char* name, int size_x, int size_y){
     struct window* win_return = (struct window*)malloc(sizeof(struct window));
 
     win_return->size_x = size_x;
     win_return->size_y = size_y;
-    win_return->title = name;
+
+    char* new_name = (char*)malloc(strlen(name) + 1);
+    strcpy(new_name, name);
+    win_return->title = new_name;
 
     win_return->char_buffer = (char*)malloc(size_x*size_y);
     win_return->color_buffer = (char*)malloc(size_x*size_y);
@@ -58,9 +61,9 @@ struct window* new_window(char* name, int size_x, int size_y){
     return win_return;
 }
 
-struct window* create_window(char* name, int size_x, int size_y){
+struct window* create_window(const char* name, int size_x, int size_y){
     window_inc++;
-    struct window* new_list = malloc(sizeof(struct window) * window_inc);
+    struct window* new_list = (struct window*)malloc(sizeof(struct window) * window_inc);
 
     memcpy(new_list, windows, sizeof(struct window)*(window_inc-1));
 

@@ -12,7 +12,7 @@ void printf_win(struct window* win, char color, const char *format, ...) {
 
     size_t size = vsnprintf(NULL, 0, format, args) + 1;
     va_end(args);
-    char* buffer = malloc(size);
+    char* buffer = (char*)malloc(size);
     if (!buffer) return;
 
     va_start(args, format);
@@ -31,7 +31,7 @@ void printf_win(struct window* win, char color, const char *format, ...) {
 
         if (win->cursor_y >= win->size_y) {
 
-            /*size_t total_size = win->size_x * win->size_y;
+            size_t total_size = win->size_x * win->size_y;
             memmove(win->char_buffer, win->char_buffer + win->size_x, total_size - win->size_x);
             memmove(win->color_buffer, win->color_buffer + win->size_x, total_size - win->size_x);
 
@@ -39,7 +39,7 @@ void printf_win(struct window* win, char color, const char *format, ...) {
             memset(win->char_buffer + total_size - win->size_x, ' ', win->size_x);
             memset(win->color_buffer + total_size - win->size_x, 0xf0, win->size_x);
 
-            win->cursor_y = win->size_y - 1;*/
+            win->cursor_y = win->size_y - 1;
         }
 
         draw_char_win(buffer[inc], win->cursor_x, win->cursor_y, color, win);
