@@ -20,7 +20,7 @@ struct window* windows;
 struct window* current_window;
 int window_inc = 0;
 
-struct window* create_window(char* name, int size_x, int size_y);
+struct window* create_window(const char* name, int size_x, int size_y);
 
 void render_window(struct window* win, int x, int y);
 
