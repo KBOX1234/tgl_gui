@@ -35,7 +35,7 @@ void printf_win(window* win, char color, const char *format, ...) {
             win->cursor_y++;
         }
 
-        if (win->cursor_y >= win->size_y) {
+        if (win->cursor_y >= win->size_y-1) {
 
             size_t total_size = win->size_x * win->size_y;
             memmove(win->char_buffer, win->char_buffer + win->size_x, total_size - win->size_x);
@@ -51,6 +51,7 @@ void printf_win(window* win, char color, const char *format, ...) {
         draw_char_win(buffer[inc], win->cursor_x, win->cursor_y, color, win);
         if(buffer[inc] == '\0'){
             draw_char_win(' ', win->cursor_x, win->cursor_y, color, win);
+            win->cursor_x--;
         }
         win->cursor_x++;
     }

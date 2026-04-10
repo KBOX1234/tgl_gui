@@ -5,12 +5,13 @@
 #include <string.h>
 
 
-window* windows;
-window* current_window;
-int window_inc;
+window** windows = NULL;
+window* current_window = NULL;
+int window_inc = 0;
 
 
 void render_window(window* win, int x, int y){
+    if(win == NULL) return;
     int pointer_x = x;
     int pointer_y = y;
 
@@ -36,15 +37,14 @@ void render_window(window* win, int x, int y){
         pointer_y++;
     }
 
-    pointer_x = x;
-    pointer_y = y;
-    while(pointer_y <= y + win->size_y){
-        while(pointer_x <= x + win->size_x){
-            draw_char('=', pointer_x, pointer_y, 0xf0);
-            pointer_x++;
-        }
-        pointer_y = pointer_y + win->size_y;
-        pointer_x = x;
+    for (int px = x; px < x + win->size_x; px++) {
+        draw_char('=', px, y, 0xf0);
+        draw_char('=', px, y + win->size_y - 1, 0xf0);
+    }
+
+    for (int py = y; py < y + win->size_y; py++) {
+        draw_char('|', x, py, 0xf0);
+        draw_char('|', x + win->size_x - 1, py, 0xf0);
     }
 
     draw_text(win->title, x + 3, y, 0x20);
@@ -75,18 +75,18 @@ window* new_window(const char* name, int size_x, int size_y){
 
 window* create_window(const char* name, int size_x, int size_y){
     window_inc++;
-    window* new_list = malloc(sizeof(window) * window_inc);
+    window** new_list = malloc(sizeof(window*) * window_inc);
 
-    memcpy(new_list, windows, sizeof(window)*(window_inc-1));
+    memcpy(new_list, windows, sizeof(window*)*(window_inc-1));
 
-    //free(windows);
+    free(windows);
     windows = new_list;
 
-    windows[window_inc] = *new_window(name, size_x, size_y);
-    windows[window_inc].x = 5;
-    windows[window_inc].y = 5;
+    windows[window_inc] = new_window(name, size_x, size_y);
+    windows[window_inc]->x = 5;
+    windows[window_inc]->y = 5;
 
-    return &windows[window_inc];
+    return windows[window_inc];
 }
 
 void clear_win(window* win){
@@ -102,4 +102,11 @@ void clear_win(window* win){
 void set_cursor_pos_win(window* win, int x, int y){
     win->cursor_x = x;
     win->cursor_y = y;
+}
+
+void destroy_window(window *w){
+    free(w->char_buffer);
+    free(w->title);
+    free(w->color_buffer);
+    free(w);
 }

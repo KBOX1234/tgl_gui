@@ -23,11 +23,13 @@ typedef struct window{
     int y;
 } window;
 
-extern window* windows;
+extern window** windows;
 extern window* current_window;
 extern int window_inc;
 
 window* create_window(const char* name, int size_x, int size_y);
+
+void destroy_window(window* w);
 
 void render_window(window* win, int x, int y);
 
