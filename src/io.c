@@ -1,4 +1,10 @@
-void draw_char_win(char c, int x, int y, char color, struct window* win) {
+#include "../include/tgl_gui.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void draw_char_win(char c, int x, int y, char color, window* win) {
     if (x >= 0 && x < win->size_x && y >= 0 && y < win->size_y) {
         size_t index = (y * win->size_x) + x;
         win->char_buffer[index] = c;
@@ -6,7 +12,7 @@ void draw_char_win(char c, int x, int y, char color, struct window* win) {
     }
 }
 
-void printf_win(struct window* win, char color, const char *format, ...) {
+void printf_win(window* win, char color, const char *format, ...) {
     va_list args;
     va_start(args, format);
 
@@ -19,7 +25,7 @@ void printf_win(struct window* win, char color, const char *format, ...) {
     vsnprintf(buffer, size, format, args);
     va_end(args);
 
-    for (int inc = 0; inc < size; inc++) {
+    for (size_t inc = 0; inc < size; inc++) {
         if (buffer[inc] == '\n') {
             win->cursor_y++;
             win->cursor_x = 0;

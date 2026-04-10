@@ -1,1 +1,1 @@
-gcc test.c -o tgl-test -lm -I./terminal_gl -g
+gcc test.c -o tgl-test -lm -lterminal_gl -L./ -ltgl_gui -g

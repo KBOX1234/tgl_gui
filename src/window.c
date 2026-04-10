@@ -1,4 +1,16 @@
-void render_window(struct window* win, int x, int y){
+#include "../include/tgl_gui.h"
+
+#include <terminal_gl.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+window* windows;
+window* current_window;
+int window_inc;
+
+
+void render_window(window* win, int x, int y){
     int pointer_x = x;
     int pointer_y = y;
 
@@ -40,13 +52,13 @@ void render_window(struct window* win, int x, int y){
 
 }
 
-struct window* new_window(const char* name, int size_x, int size_y){
-    struct window* win_return = (struct window*)malloc(sizeof(struct window));
+window* new_window(const char* name, int size_x, int size_y){
+    window* win_return = malloc(sizeof(window));
 
     win_return->size_x = size_x;
     win_return->size_y = size_y;
 
-    char* new_name = (char*)malloc(strlen(name) + 1);
+    char* new_name = malloc(strlen(name) + 1);
     strcpy(new_name, name);
     win_return->title = new_name;
 
@@ -61,11 +73,11 @@ struct window* new_window(const char* name, int size_x, int size_y){
     return win_return;
 }
 
-struct window* create_window(const char* name, int size_x, int size_y){
+window* create_window(const char* name, int size_x, int size_y){
     window_inc++;
-    struct window* new_list = (struct window*)malloc(sizeof(struct window) * window_inc);
+    window* new_list = malloc(sizeof(window) * window_inc);
 
-    memcpy(new_list, windows, sizeof(struct window)*(window_inc-1));
+    memcpy(new_list, windows, sizeof(window)*(window_inc-1));
 
     //free(windows);
     windows = new_list;
@@ -77,7 +89,7 @@ struct window* create_window(const char* name, int size_x, int size_y){
     return &windows[window_inc];
 }
 
-void clear_win(struct window* win){
+void clear_win(window* win){
     int size_x = win->size_x;
     int size_y = win->size_y;
 
@@ -87,7 +99,7 @@ void clear_win(struct window* win){
     memset(win->color_buffer, 0xf0, size_x*size_y);
 }
 
-void set_cursor_pos_win(struct window* win, int x, int y){
+void set_cursor_pos_win(window* win, int x, int y){
     win->cursor_x = x;
     win->cursor_y = y;
 }

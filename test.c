@@ -1,12 +1,8 @@
-#include <stdlib.h>
-#include <string.h>
-
 #define IMG_LOADING
 
 #include "terminal_gl.h"
-#include "impl/backend_linux.c"
 
-#include "tgl_gui.h"
+#include "include/tgl_gui.h"
 
 int main(){
 
