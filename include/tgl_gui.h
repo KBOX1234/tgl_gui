@@ -1,3 +1,10 @@
+#ifndef TGL_GUI_H
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdarg.h>
 
 typedef struct window{
@@ -31,3 +38,9 @@ void printf_win(window* win, char color, const char *format, ...);
 void set_cursor_pos_win(window* win, int x, int y);
 
 void clear_win(window* win);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
