@@ -1,5 +1,5 @@
 #ifndef TGL_GUI_H
-
+#define TGL_GUI_H
 
 #ifdef __cplusplus
 extern "C" {
